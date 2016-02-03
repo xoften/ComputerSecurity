@@ -6,6 +6,4 @@ package ExerciseOne;
 public class Encryption {
 
 
-
-
 }
