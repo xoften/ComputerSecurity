@@ -59,6 +59,8 @@ public class SubstitutionMain
             Scanner fileReader = new Scanner(inputFile);
             fileReader.useDelimiter("");
 
+
+
             while (fileReader.hasNext())
             {
                 int charValue = (int) fileReader.next().charAt(0);

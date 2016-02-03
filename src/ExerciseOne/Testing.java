@@ -8,7 +8,7 @@ public class Testing
 {
     public static void main(String[] args)
     {
-        System.out.println((char) 197);
+        System.out.println((char) 65279);
         System.out.println((int) 'ÿ');
     }
 }
