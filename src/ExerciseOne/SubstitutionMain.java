@@ -13,38 +13,98 @@ public class SubstitutionMain
 {
     public static void main(String[] args) throws FileNotFoundException {
 
-        int key = 10;
+        String function;
+        int key = -1;
+        String filePath;
 
-        File originalText = new File("C:\\temp\\text.txt");
-        Scanner in = new Scanner(originalText);
-        in.useDelimiter("");
-        PrintWriter encrypt = new PrintWriter("C:\\temp\\encryption.txt");
-        while (in.hasNext())
+        Scanner in = new Scanner(System.in);
+
+        // User input
+        do
         {
-            int charValue = (int) in.next().charAt(0);
-            char encryptChar = (char) (charValue + key);
-            encrypt.print(encryptChar);
+            System.out.print("Encrypt (e) or Decrypt (d) ?: ");
+            function = in.next();
+        }
+        while(!function.equalsIgnoreCase("d") && !function.equalsIgnoreCase("e"));
+
+
+        boolean validKey = false;
+
+        // Make sure a valid key is provided
+        while (!validKey)
+        {
+            System.out.print("Enter a key (0-255): ");
+            String keyInput = in.next();
+            if (keyInput.matches("[0-9]+"))
+            {
+                key = Integer.parseInt(keyInput);
+                if (key >= 0 && key <= 255)
+                {
+                    validKey = true;
+                }
+            }
         }
 
-        in.close();
-        encrypt.close();
+        System.out.print("Filepath: ");
+        filePath = in.next();
+
+        File inputFile = new File(filePath);
 
 
-        Scanner in2 = new Scanner(new File("C:\\temp\\encryption.txt"));
-
-
-        PrintWriter decrypt = new PrintWriter("C:\\temp\\decryption.txt");
-
-        in2.useDelimiter("");
-
-        while (in2.hasNext())
+        // Decryption function
+        if (function.equalsIgnoreCase("d"))
         {
-            int charValue = (int) in2.next().charAt(0);
-            char decryptChar = (char) (charValue - key);
-            decrypt.print(decryptChar);
+            System.out.println("Decrypting to C:\\temp\\decrypt_output.txt");
+            PrintWriter decryptOutput = new PrintWriter("C:\\temp\\decrypt_output.txt");
+            Scanner fileReader = new Scanner(inputFile);
+            fileReader.useDelimiter("");
+
+            while (fileReader.hasNext())
+            {
+                int charValue = (int) fileReader.next().charAt(0);
+                int decryptValue = (charValue - key);
+
+                // adjust Char Value so it's within valid key range, if necessary
+                if (decryptValue < 0)
+                {
+                    decryptValue += 256;
+                }
+                // For debugging purposes
+                //System.out.println(charValue + "goes" + decryptValue);
+
+                // Write to file
+                char decryptChar = (char) decryptValue ;
+                decryptOutput.print(decryptChar);
+            }
+
+            fileReader.close();
+            decryptOutput.close();
+
         }
 
-        in2.close();
-        decrypt.close();
+        // Encryption function
+        if (function.equalsIgnoreCase("e"))
+        {
+            System.out.println("Encrypting to C:\\temp\\encrypt_output.txt");
+            PrintWriter encryptOutput = new PrintWriter("C:\\temp\\encrypt_output.txt");
+
+            Scanner fileReader = new Scanner(inputFile);
+            fileReader.useDelimiter("");
+
+            while (fileReader.hasNext())
+            {
+                int charValue = (int) fileReader.next().charAt(0);
+                // For debugging purposes
+                //System.out.println(charValue + "goes " + ((charValue + key) % 256));
+
+                // Write to file
+                char encryptChar = (char) ((charValue + key) % 256 );
+                encryptOutput.print(encryptChar);
+            }
+
+            fileReader.close();
+            encryptOutput.close();
+        }
+
     }
 }
