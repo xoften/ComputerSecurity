@@ -56,6 +56,7 @@ public class Substitution
             }
         }
 
+        // Ask for filepath
         System.out.print("Filepath: ");
         filePath = in.next();
 
@@ -72,20 +73,24 @@ public class Substitution
 
     /**
      *  Decrypt a file
-     * @param filePath
-     * @param key
+     *  Creates a new file for decryption output named decrypt_output.txt in same directory as input file
+     * @param filePath Full path to input file to decrypt
+     * @param key decryption key
      * @throws FileNotFoundException
      */
     public void decrypt(String filePath, int key) throws FileNotFoundException
     {
         File inputFile = new File(filePath);
-        String inputPath = inputFile.getParent();
-        System.out.println("Decrypting to " + inputPath + "\\decrypt_output.txt");
-        PrintWriter decryptOutput = new PrintWriter(inputPath + "\\decrypt_output.txt");
+
         Scanner fileReader = new Scanner(inputFile);
         fileReader.useDelimiter("");
 
+        String inputPath = inputFile.getParent();
+        System.out.println("Decrypting to " + inputPath + "\\decrypt_output.txt");
+        PrintWriter decryptOutput = new PrintWriter(inputPath + "\\decrypt_output.txt");
 
+
+        // Process all characters in file
         while (fileReader.hasNext()) {
             int charValue = (int) fileReader.next().charAt(0);
             int decryptValue = (charValue - key);
@@ -108,17 +113,24 @@ public class Substitution
     }
 
 
+    /**
+     * Encrypt a file
+     * Creates a new file for decryption output named encrypt_output.txt in same directory as input file
+     * @param filePath Full path to input file to decrypt
+     * @param key Encryption key
+     * @throws FileNotFoundException
+     */
     public void encrypt(String filePath, int key) throws FileNotFoundException
     {
         File inputFile = new File(filePath);
-        String inputPath = inputFile.getParent();
-
-        System.out.println("Encrypting to " + inputPath + "\\encrypt_output.txt");
-        PrintWriter encryptOutput = new PrintWriter(inputPath + "\\encrypt_output.txt");
-
         Scanner fileReader = new Scanner(inputFile);
         fileReader.useDelimiter("");
 
+        String inputPath = inputFile.getParent();
+        System.out.println("Encrypting to " + inputPath + "\\encrypt_output.txt");
+        PrintWriter encryptOutput = new PrintWriter(inputPath + "\\encrypt_output.txt");
+
+        // Process all characters in file
         while (fileReader.hasNext()) {
             int charValue = (int) fileReader.next().charAt(0);
             // For debugging purposes
