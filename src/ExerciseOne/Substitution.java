@@ -70,7 +70,12 @@ public class Substitution
         }
     }
 
-
+    /**
+     *  Decrypt a file
+     * @param filePath
+     * @param key
+     * @throws FileNotFoundException
+     */
     public void decrypt(String filePath, int key) throws FileNotFoundException
     {
         File inputFile = new File(filePath);
