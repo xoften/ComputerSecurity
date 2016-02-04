@@ -9,11 +9,11 @@ import java.util.Scanner;
 /**
  * Created by Michael Johansson(mj223gn) on 2016-02-03.
  */
-public class TranspositionMain {
+public class Transposition {
 
     private final int blockSize = 4;
 
-    public TranspositionMain() {
+    public Transposition() {
 
     }
 
