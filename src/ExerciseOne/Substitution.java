@@ -5,51 +5,52 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-/**
+/** Provides basic substitution encryption functionality with a 8-bit key (256 different keys)
  * @author Peter Danielsson
- *         pd222dj@student.lnu.se
+ * pd222dj@student.lnu.se
  */
 public class Substitution
 {
 
-        private String function;
-        private int key;
-        private String filePath;
+    /**
+     * Constructor, no arguments given
+     * Nothing to initialize
+     */
+    public Substitution() throws FileNotFoundException
+    {
+    }
 
-        /**
-         * Constructor, no arguments given
-         */
-        public Substitution()
-        {
-            this.function = "";
-            this.key = -1;
-            this.filePath = "";
+    /**
+     * Receive all necessary input from user and call the corresponding decrypt/encrypt method
+     * @throws FileNotFoundException
+     */
+    public void getInput() throws FileNotFoundException {
 
-        }
-
+        // Create new Scanner object for user input
         Scanner in = new Scanner(System.in);
 
-        // User input
-        do
-        {
+        // Variables for grabbing user input and calling the desired decrypt/encrypt method
+        String function;
+        String filePath;
+        int key = -1;
+
+        // Keep asking until a valid function has been provided
+        do {
             System.out.print("Encrypt (e) or Decrypt (d) ?: ");
             function = in.next();
         }
-        while(!function.equalsIgnoreCase("d") && !function.equalsIgnoreCase("e"));
+        while (!function.equalsIgnoreCase("d") && !function.equalsIgnoreCase("e"));
 
 
         boolean validKey = false;
 
-        // Make sure a valid key is provided
-        while (!validKey)
-        {
+        // Keep asking until a valid key has been provided
+        while (!validKey) {
             System.out.print("Enter a key (0-255): ");
             String keyInput = in.next();
-            if (keyInput.matches("[0-9]+"))
-            {
+            if (keyInput.matches("[0-9]+")) {
                 key = Integer.parseInt(keyInput);
-                if (key >= 0 && key <= 255)
-                {
+                if (key >= 0 && key <= 255) {
                     validKey = true;
                 }
             }
@@ -58,67 +59,74 @@ public class Substitution
         System.out.print("Filepath: ");
         filePath = in.next();
 
-        File inputFile = new File(filePath);
-
-
-        // Decryption function
+        // Call corresponding encrypt/decrypt method
         if (function.equalsIgnoreCase("d"))
         {
-            System.out.println("Decrypting to C:\\temp\\decrypt_output.txt");
-            PrintWriter decryptOutput = new PrintWriter("C:\\temp\\decrypt_output.txt");
-            Scanner fileReader = new Scanner(inputFile);
-            System.out.println("Parent: " + inputFile.getParent());
-            fileReader.useDelimiter("");
-
-
-
-            while (fileReader.hasNext())
-            {
-                int charValue = (int) fileReader.next().charAt(0);
-                int decryptValue = (charValue - key);
-
-                // adjust Char Value so it's within valid key range, if necessary
-                if (decryptValue < 0)
-                {
-                    decryptValue += 256;
-                }
-                // For debugging purposes
-                //System.out.println(charValue + "goes" + decryptValue);
-
-                // Write to file
-                char decryptChar = (char) decryptValue ;
-                decryptOutput.print(decryptChar);
-            }
-
-            fileReader.close();
-            decryptOutput.close();
-
+            this.decrypt(filePath, key);
         }
-
-        // Encryption function
-        if (function.equalsIgnoreCase("e"))
+        else if (function.equalsIgnoreCase("e"))
         {
-
-            System.out.println("Encrypting to C:\\temp\\encrypt_output.txt");
-            PrintWriter encryptOutput = new PrintWriter("C:\\temp\\encrypt_output.txt");
-
-            Scanner fileReader = new Scanner(inputFile);
-            fileReader.useDelimiter("");
-
-            while (fileReader.hasNext())
-            {
-                int charValue = (int) fileReader.next().charAt(0);
-                // For debugging purposes
-                //System.out.println(charValue + "goes " + ((charValue + key) % 256));
-
-                // Write to file
-                char encryptChar = (char) ((charValue + key) % 256 );
-                encryptOutput.print(encryptChar);
-            }
-
-            fileReader.close();
-            encryptOutput.close();
+            this.encrypt(filePath, key);
         }
+    }
+
+
+    public void decrypt(String filePath, int key) throws FileNotFoundException
+    {
+        File inputFile = new File(filePath);
+        String inputPath = inputFile.getParent();
+        System.out.println("Decrypting to " + inputPath + "\\decrypt_output.txt");
+        PrintWriter decryptOutput = new PrintWriter(inputPath + "\\decrypt_output.txt");
+        Scanner fileReader = new Scanner(inputFile);
+        fileReader.useDelimiter("");
+
+
+        while (fileReader.hasNext()) {
+            int charValue = (int) fileReader.next().charAt(0);
+            int decryptValue = (charValue - key);
+
+            // adjust Char Value so it's within valid key range, if necessary
+            if (decryptValue < 0) {
+                decryptValue += 256;
+            }
+            // For debugging purposes
+            //System.out.println(charValue + "goes" + decryptValue);
+
+            // Write to file
+            char decryptChar = (char) decryptValue;
+            decryptOutput.print(decryptChar);
+        }
+
+        fileReader.close();
+        decryptOutput.close();
+
+    }
+
+
+    public void encrypt(String filePath, int key) throws FileNotFoundException
+    {
+        File inputFile = new File(filePath);
+        String inputPath = inputFile.getParent();
+
+        System.out.println("Encrypting to " + inputPath + "\\encrypt_output.txt");
+        PrintWriter encryptOutput = new PrintWriter(inputPath + "\\encrypt_output.txt");
+
+        Scanner fileReader = new Scanner(inputFile);
+        fileReader.useDelimiter("");
+
+        while (fileReader.hasNext()) {
+            int charValue = (int) fileReader.next().charAt(0);
+            // For debugging purposes
+            //System.out.println(charValue + "goes " + ((charValue + key) % 256));
+
+            // Write to file
+            char encryptChar = (char) ((charValue + key) % 256);
+            encryptOutput.print(encryptChar);
+        }
+
+        fileReader.close();
+        encryptOutput.close();
+    }
 
 
 }
