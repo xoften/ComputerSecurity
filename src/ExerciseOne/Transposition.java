@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Transposition {
 
-    private final int blockSize = 4;
+    private int blockSize = 4;
 
     public Transposition() {
 
@@ -31,6 +31,13 @@ public class Transposition {
         }
         while(!function.equalsIgnoreCase("d") && !function.equalsIgnoreCase("e"));
 
+        do
+        {
+            System.out.print("What block size? min = (3) max = (6): ");
+            blockSize = in.nextInt();
+        }
+        while(blockSize < 3 || blockSize > 6);
+
         System.out.print("Filepath: ");
         filePath = in.next();
 
@@ -42,6 +49,12 @@ public class Transposition {
         }
     }
 
+    /**
+     * Encrypts file
+     * create a new file where we store the encrypted version of the file.
+     * @param filePath Path to the file we want to encrypt
+     * @throws FileNotFoundException
+     */
     public void TranspositionEncrypt(String filePath) throws FileNotFoundException {
         File plainText = new File(filePath);
 
@@ -97,9 +110,11 @@ public class Transposition {
     }
 
     /**
-     * DECRYPT
+     * Decrypts file
+     * Creates a new file with the decrypted message
+     * @param filePath Path to the file we want to decrypt
+     * @throws FileNotFoundException
      */
-
     public void TranspositionDecrypt(String filePath) throws FileNotFoundException {
 
 
