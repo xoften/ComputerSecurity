@@ -9,8 +9,14 @@ import java.io.FileNotFoundException;
 public class Testing {
     public static void main(String[] args) throws FileNotFoundException{
 
-        Transposition test = new Transposition();
-        test.getInput();
+        System.out.println((int) '*');
+        System.out.println((int) 'M');
+
+        System.out.println((int) ' ');
+        System.out.println((int) '#');
+
+
+
     }
 
 }

@@ -145,5 +145,17 @@ public class Substitution
         encryptOutput.close();
     }
 
+    /**
+     * Print the first line of text in text file
+     * @param filePath Full path to input file do decrypt
+     * @throws FileNotFoundException
+     */
+    public void printOneFileLine(String filePath) throws FileNotFoundException {
+
+        File inputFile = new File(filePath);
+        Scanner in = new Scanner(inputFile);
+        System.out.println(in.nextLine());
+
+    }
 
 }
