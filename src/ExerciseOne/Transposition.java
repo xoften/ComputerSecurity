@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
+ * Transposition Class that lets you encrypt/decrypt with transposition
  * Created by Michael Johansson(mj223gn) on 2016-02-03.
  */
 public class Transposition {
