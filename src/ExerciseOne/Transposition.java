@@ -11,7 +11,8 @@ import java.util.Scanner;
  */
 public class Transposition {
 
-    private int blockSize = 4;
+    private int blockSize;
+    private int numberOfBlocks;
 
     public Transposition() {
 
@@ -79,7 +80,6 @@ public class Transposition {
 
         //we set the size of our blocks
 
-        int blockSize = 4;
 
         //if the text dont fill upp all slots in the blocks we fill them up with " "
         while (text.length() % blockSize != 0) {
@@ -136,7 +136,7 @@ public class Transposition {
         }
 
         //we calculate how many blocks we have.
-        int numberOfBlocks = chars2.size() / blockSize;
+        numberOfBlocks = chars2.size() / blockSize;
 
         /**
          * Then we we start with the first character in each block. så we write position 0 + numberOfBlocks + numberOfBlocks
