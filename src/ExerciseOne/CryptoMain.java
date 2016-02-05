@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author Peter Danielsson (pd222dj@student.lnu.se), Michael Johansson (mj223gn@student.lnu.se)
  *
  */
-public class SubstitutionMain
+public class CryptoMain
 {
     public static void main(String[] args) throws FileNotFoundException {
 
