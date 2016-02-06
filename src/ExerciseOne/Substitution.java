@@ -146,15 +146,66 @@ public class Substitution
     }
 
     /**
-     * Print the first line of text in text file
+     * Returns the contents of a text file
      * @param filePath Full path to input file do decrypt
      * @throws FileNotFoundException
+     * @return contents of text file
      */
-    public void printOneFileLine(String filePath) throws FileNotFoundException {
+    public String readFile(String filePath) throws FileNotFoundException {
 
         File inputFile = new File(filePath);
         Scanner in = new Scanner(inputFile);
-        System.out.println(in.nextLine());
+
+        String result ="";
+
+        while (in.hasNextLine())
+        {
+            result += in.nextLine();
+        }
+        return result;
+
+    }
+
+    /**
+     * Tries to brute force a cipher text using the keys 0-255
+     * @param filePath Full path to file
+     * @param text A known text string to look for in decrypted file
+     * @throws FileNotFoundException
+     */
+    public void bruteForce(String filePath, String text) throws FileNotFoundException
+    {
+        // Key span 0-255
+        final int NUMBER_OF_KEYS = 256;
+
+        File inputFile = new File(filePath);
+
+        boolean found = false;
+        int key = 0;
+
+        // Keep trying until a valid key has been found or all keys have been tested
+        while (!found && key < NUMBER_OF_KEYS)
+        {
+            System.out.println("Trying key: " + key);
+            this.decrypt(filePath, key);
+
+            if(this.readFile(inputFile.getParent() + "\\decrypt_output.txt").contains(text))
+            {
+                found = true;
+            }
+            else
+            {
+                key++;
+            }
+        }
+        // Print results
+        if (found)
+        {
+            System.out.println("A probable key found: " + key + ". Please check the output file.");
+        }
+        else
+        {
+            System.out.println("No working key found");
+        }
 
     }
 
