@@ -13,6 +13,7 @@ public class SubstitutionMain
     {
         Substitution sub = new Substitution();
 
+        // Demo bruteforce
         sub.bruteForce("C:\\temp\\Ola.txt", "Secret");
 
     }
