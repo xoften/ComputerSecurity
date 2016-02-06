@@ -13,8 +13,6 @@ public class SubstitutionMain
     {
         Substitution sub = new Substitution();
 
-        //System.out.println(sub.readOneFileLine("C:\\temp\\decrypt_output.txt").contains("Secret"));
-        //sub.decrypt("C:\\temp\\Ola.txt", 3);
         sub.bruteForce("C:\\temp\\Ola.txt", "Secret");
 
     }
